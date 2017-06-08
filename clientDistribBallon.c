@@ -6,20 +6,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
-<<<<<<< HEAD
 #include <netdb.h> 
 #define PORT 10001
 #include "Stock.h"
-=======
+
 #define PORT 10001
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 
 
 
 typedef struct ball ball;
 struct ball{int ID; char IPjoueur[32]; int chrono};
 
-<<<<<<< HEAD
 char IProbot[32]="127.0.0.1"; // adresse provisoire, sera remplacée par l'IP du robot
 
 char* IPjoueur[6]={"127.0.0.1","127.0.0.1","127.0.0.1","127.0.0.1","127.0.0.1","127.0.0.1"}; // 
@@ -244,21 +241,6 @@ validationballon_1(char *host, char *cleballon)
 
 
 
-
-
-
-
-
-
-
-
-
-
-=======
-char *IP="127.0.0.1"; // adresse provisoire, sera remplacée par l'IP du robot
-
-int code = 1; // ne pas oublier de l'incrémenter, variable globale
-
 /*function qui génère un ballon à distribuer*/
 ball GenerateBall(char *IPjoueur){
 
@@ -292,12 +274,9 @@ char* Serialize(ball Ballon){
 }
 
 
-// tableau des ballons
 
-ball Ballons[4]; // à mettre dans le gestionnaire de stock de ballon
 
-// 1- fonction récupération logs 
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
+
 
 
 
@@ -305,7 +284,6 @@ ball Ballons[4]; // à mettre dans le gestionnaire de stock de ballon
 
 int main(){
 
-<<<<<<< HEAD
 	// réception des données
 	char* datagame = getBeeBotte();
 
@@ -313,17 +291,11 @@ int main(){
 	ParseBeeBotte(datagame);
 
 	//initialisations sockets
-=======
-	// réception des logs
 
-	///parsage
 
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 	int sock;
     struct sockaddr_in server;
     char message[1000] , server_reply[2000];
-     
-<<<<<<< HEAD
    
 	//boucle infinie
 	 for(;;){

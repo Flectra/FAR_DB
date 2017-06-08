@@ -70,11 +70,7 @@ int ballonDispo(){
 	return ballonlibre;
 }
 
-<<<<<<< HEAD
-/*function qui génère un ballon à distribuer*/
-=======
 	/*function qui génère un ballon à distribuer*/
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 ball GenerateBall(char *IPjoueur){
 
   ball Ballon;
@@ -89,34 +85,10 @@ ball GenerateBall(char *IPjoueur){
   return Ballon;
 }
 
-<<<<<<< HEAD
-//fonction qui sérialise une ball
-
-char* Serialize(ball Ballon){
-
-  char str1[1024];
-  sprintf(str1,"%d",Ballon.ID);
-  fflush(stdout);
-  strcat(str1,"*");
-  strcat(str1,Ballon.IPjoueur);
-  strcat(str1,"*");
-  char str3[128];
-  sprintf(str3,"%d",Ballon.chrono);
-  strcat(str1,str3);
-  return str1;
-
-}
-
-
-//fonction distribution ballon : appel ballon dispo en renvoie toujours 1 (décrément nb ballon)
-
-char* distribBallon(char* IPjoueur){
-=======
 
 //fonction distribution ballon : appel ballon dispo en renvoie toujours 1 (décrément nb ballon)
 
 char* distribBallon(char * IPjoueur){
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 	int estdispo = 0;
 	int j=-1;
 	ball Ballon;
@@ -126,10 +98,6 @@ char* distribBallon(char * IPjoueur){
 	}
 	Ballon = GenerateBall(IPjoueur);
 	char* cleBallon = Serialize(Ballon);
-<<<<<<< HEAD
-	Ballons[j] = cleBallon;
-=======
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 	return cleBallon;
 }
 
@@ -141,11 +109,7 @@ int ballonvalide(char* Ballon){
 	int trouve = 0;
 	while(i < sizeof(Ballons) && trouve == 0){
     // test si le ball est dans la liste de Ballons et si il n'est pas encore expiré
-<<<<<<< HEAD
-	    if( sameball(Ballons[i], Ballon)==0 && chronoBall(Ballon) + 120 >= time(NULL)){
-=======
 	    if( sameball(Ballons[i], Ballon) && chronoBall(Ballon) + 120 >= time(NULL)){
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 	        Ballons[i] = Ballon;
 	        nbBallons +=1;
 	        trouve = 1;
@@ -154,15 +118,6 @@ int ballonvalide(char* Ballon){
 	return trouve;
 }
 
-<<<<<<< HEAD
-reponse1 *
-distribution_1_svc(data1 *argp, struct svc_req *rqstp)
-{
-	static reponse1  result;
-
-	char *key = distribBallon(argp->IPjoueur);
-	strcpy(result.cleballon,key);
-=======
 
 reponse1 *
 validation_1_svc(data1 *argp, struct svc_req *rqstp)
@@ -172,30 +127,11 @@ validation_1_svc(data1 *argp, struct svc_req *rqstp)
 	int same = 0;
 
 
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 
 	return &result;
 }
 
 reponse2 *
-<<<<<<< HEAD
-validation_1_svc(data2 *argp, struct svc_req *rqstp)
-{
-	static reponse2  result;
-
-	int same = 0;
-	int j=0;
-	while( sameball(argp->cleballon , Ballons[j])!=0 && j<sizeof(Ballons)){
-		j++;
-	}
-	if (j = 4){
-		result.ok = 0;
-	}
-	else{
-		result.ok = 1;
-		Ballons[j]= "blabla*bla*0"; // on libère une place dans le tableau
-	}
-=======
 distribution_2_svc(data2 *argp, struct svc_req *rqstp)
 {
 	static reponse2  result;
@@ -204,6 +140,5 @@ distribution_2_svc(data2 *argp, struct svc_req *rqstp)
 	 * insert server code here
 	 */
 
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 	return &result;
 }
