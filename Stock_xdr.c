@@ -10,13 +10,9 @@ xdr_data1 (XDR *xdrs, data1 *objp)
 {
 	register int32_t *buf;
 
-<<<<<<< HEAD
 	int i;
 	 if (!xdr_vector (xdrs, (char *)objp->IPjoueur, 32,
 		sizeof (char), (xdrproc_t) xdr_char))
-=======
-	 if (!xdr_int (xdrs, &objp->ballonDispo))
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 		 return FALSE;
 	return TRUE;
 }
@@ -46,11 +42,7 @@ xdr_data2 (XDR *xdrs, data2 *objp)
 }
 
 bool_t
-<<<<<<< HEAD
 xdr_reponse2 (XDR *xdrs, reponse2 *objp)
-=======
-xdr_reponse1 (XDR *xdrs, reponse1 *objp)
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 {
 	register int32_t *buf;
 

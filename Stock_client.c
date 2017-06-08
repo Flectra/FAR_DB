@@ -8,21 +8,21 @@
 
 
 void
-validation_1(char *host)
+distributionballon_1(char *host)
 {
 	CLIENT *clnt;
 	reponse1  *result_1;
-	data1  validation_1_arg;
+	data1  distribution_1_arg;
 
 #ifndef	DEBUG
-	clnt = clnt_create (host, Validation, VERSION_UN, "udp");
+	clnt = clnt_create (host, distributionballon, VERSION_UN, "udp");
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);
 		exit (1);
 	}
 #endif	/* DEBUG */
 
-	result_1 = validation_1(&validation_1_arg, clnt);
+	result_1 = distribution_1(&distribution_1_arg, clnt);
 	if (result_1 == (reponse1 *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
@@ -33,21 +33,21 @@ validation_1(char *host)
 
 
 void
-distribution_2(char *host)
+validationballon_1(char *host)
 {
 	CLIENT *clnt;
 	reponse2  *result_1;
-	data2  distribution_2_arg;
+	data2  validation_1_arg;
 
 #ifndef	DEBUG
-	clnt = clnt_create (host, distribution, VERSION_UN, "udp");
+	clnt = clnt_create (host, validationballon, VERSION_UN, "udp");
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);
 		exit (1);
 	}
 #endif	/* DEBUG */
 
-	result_1 = distribution_2(&distribution_2_arg, clnt);
+	result_1 = validation_1(&validation_1_arg, clnt);
 	if (result_1 == (reponse2 *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
@@ -67,7 +67,7 @@ main (int argc, char *argv[])
 		exit (1);
 	}
 	host = argv[1];
-	validation_1 (host);
-	distribution_2 (host);
+	distributionballon_1 (host);
+	validationballon_1 (host);
 exit (0);
 }

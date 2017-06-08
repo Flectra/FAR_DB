@@ -15,11 +15,7 @@ extern "C" {
 
 
 struct data1 {
-<<<<<<< HEAD
 	char IPjoueur[32];
-=======
-	int ballonDispo;
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 };
 typedef struct data1 data1;
 
@@ -36,7 +32,6 @@ struct data2 {
 typedef struct data2 data2;
 
 
-<<<<<<< HEAD
 struct reponse2 {
 	int ok;
 };
@@ -73,44 +68,6 @@ extern int validationballon_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 extern  reponse2 * validation_1();
 extern  reponse2 * validation_1_svc();
 extern int validationballon_1_freeresult ();
-=======
-struct reponse1 {
-	int ok;
-};
-typedef struct reponse1 reponse1;
-
-
-#define Validation 0x20000001
-#define VERSION_UN 1
-
-#if defined(__STDC__) || defined(__cplusplus)
-#define Validation 1
-extern  reponse1 * validation_1(data1 *, CLIENT *);
-extern  reponse1 * validation_1_svc(data1 *, struct svc_req *);
-extern int validation_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
-
-#else /* K&R C */
-#define Validation 1
-extern  reponse1 * validation_1();
-extern  reponse1 * validation_1_svc();
-extern int validation_1_freeresult ();
-#endif /* K&R C */
-
-#define distribution 0x20000001
-#define VERSION_UN 2
-
-#if defined(__STDC__) || defined(__cplusplus)
-#define distribution 1
-extern  reponse2 * distribution_2(data2 *, CLIENT *);
-extern  reponse2 * distribution_2_svc(data2 *, struct svc_req *);
-extern int distribution_2_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
-
-#else /* K&R C */
-#define distribution 1
-extern  reponse2 * distribution_2();
-extern  reponse2 * distribution_2_svc();
-extern int distribution_2_freeresult ();
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 #endif /* K&R C */
 
 /* the xdr functions */
@@ -121,15 +78,9 @@ extern  bool_t xdr_data1 (XDR *, data1*);
 extern  bool_t xdr_reponse1 (XDR *, reponse1*);
 extern  bool_t xdr_reponse1 (XDR *, reponse1*);
 extern  bool_t xdr_data2 (XDR *, data2*);
-<<<<<<< HEAD
 extern  bool_t xdr_data2 (XDR *, data2*);
 extern  bool_t xdr_reponse2 (XDR *, reponse2*);
 extern  bool_t xdr_reponse2 (XDR *, reponse2*);
-=======
-extern  bool_t xdr_data1 (XDR *, data1*);
-extern  bool_t xdr_reponse1 (XDR *, reponse1*);
-extern  bool_t xdr_reponse1 (XDR *, reponse1*);
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 
 #else /* K&R C */
 extern bool_t xdr_data1 ();
@@ -137,15 +88,9 @@ extern bool_t xdr_data1 ();
 extern bool_t xdr_reponse1 ();
 extern bool_t xdr_reponse1 ();
 extern bool_t xdr_data2 ();
-<<<<<<< HEAD
 extern bool_t xdr_data2 ();
 extern bool_t xdr_reponse2 ();
 extern bool_t xdr_reponse2 ();
-=======
-extern bool_t xdr_data1 ();
-extern bool_t xdr_reponse1 ();
-extern bool_t xdr_reponse1 ();
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 
 #endif /* K&R C */
 

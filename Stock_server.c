@@ -20,7 +20,7 @@
 int nbBallons =4;
 char logs[6];
 int code = 1; // ne pas oublier de l'incrémenter
-
+int bloqueur=1;
 
 char *IP="127.0.0.1"; // adresse provisoire, sera remplacée par l'IP du robot
 
@@ -70,7 +70,7 @@ int ballonDispo(){
 	return ballonlibre;
 }
 
-	/*function qui génère un ballon à distribuer*/
+/*function qui génère un ballon à distribuer*/
 ball GenerateBall(char *IPjoueur){
 
   ball Ballon;
@@ -85,10 +85,27 @@ ball GenerateBall(char *IPjoueur){
   return Ballon;
 }
 
+//fonction qui sérialise une ball
+
+char* Serialize(ball Ballon){
+
+  char str1[1024];
+  sprintf(str1,"%d",Ballon.ID);
+  fflush(stdout);
+  strcat(str1,"*");
+  strcat(str1,Ballon.IPjoueur);
+  strcat(str1,"*");
+  char str3[128];
+  sprintf(str3,"%d",Ballon.chrono);
+  strcat(str1,str3);
+  return str1;
+
+}
+
 
 //fonction distribution ballon : appel ballon dispo en renvoie toujours 1 (décrément nb ballon)
 
-char* distribBallon(char * IPjoueur){
+char* distribBallon(char* IPjoueur){
 	int estdispo = 0;
 	int j=-1;
 	ball Ballon;
@@ -98,6 +115,7 @@ char* distribBallon(char * IPjoueur){
 	}
 	Ballon = GenerateBall(IPjoueur);
 	char* cleBallon = Serialize(Ballon);
+	Ballons[j] = cleBallon;
 	return cleBallon;
 }
 
@@ -109,7 +127,7 @@ int ballonvalide(char* Ballon){
 	int trouve = 0;
 	while(i < sizeof(Ballons) && trouve == 0){
     // test si le ball est dans la liste de Ballons et si il n'est pas encore expiré
-	    if( sameball(Ballons[i], Ballon) && chronoBall(Ballon) + 120 >= time(NULL)){
+	    if( sameball(Ballons[i], Ballon)==0 && chronoBall(Ballon) + 120 >= time(NULL)){
 	        Ballons[i] = Ballon;
 	        nbBallons +=1;
 	        trouve = 1;
@@ -118,27 +136,38 @@ int ballonvalide(char* Ballon){
 	return trouve;
 }
 
-
 reponse1 *
-validation_1_svc(data1 *argp, struct svc_req *rqstp)
+distribution_1_svc(data1 *argp, struct svc_req *rqstp)
 {
 	static reponse1  result;
-
-	int same = 0;
-
-
+	while(bloqueur==0){};
+	bloqueur=0;
+	char *key = distribBallon(argp->IPjoueur);
+	bloqueur=1;
+	strcpy(result.cleballon,key);
 
 	return &result;
 }
 
 reponse2 *
-distribution_2_svc(data2 *argp, struct svc_req *rqstp)
+validation_1_svc(data2 *argp, struct svc_req *rqstp)
 {
 	static reponse2  result;
 
-	/*
-	 * insert server code here
-	 */
-
+	int same = 0;
+	int j=0;
+	while(bloqueur==0){};
+	bloqueur=0;
+	while( sameball(argp->cleballon , Ballons[j])!=0 && j<sizeof(Ballons)){
+		j++;
+	}
+	bloqueur=1;
+	if (j = 4){
+		result.ok = 0;
+	}
+	else{
+		result.ok = 1;
+		Ballons[j]= "blabla*bla*0"; // on libère une place dans le tableau
+	}
 	return &result;
 }

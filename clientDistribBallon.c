@@ -17,7 +17,7 @@
 typedef struct ball ball;
 struct ball{int ID; char IPjoueur[32]; int chrono};
 
-char IProbot[32]="127.0.0.1"; // adresse provisoire, sera remplacée par l'IP du robot
+char* IProbot="127.0.0.1"; // adresse provisoire, sera remplacée par l'IP du robot
 
 char* IPjoueur[6]={"127.0.0.1","127.0.0.1","127.0.0.1","127.0.0.1","127.0.0.1","127.0.0.1"}; // 
 char* RFIDjoueur[6]={"a","b","c","d","e","f"};
@@ -76,7 +76,6 @@ void ParseBeeBotte(char* buffer){
 		char entitetest[24]="";
 		strcpy(entitetest,entite);
 		if(strcmp(typetest,"IP")==0 && strcmp(entitetest, "RJ")==0){
-			printf("entrechaklign\n");
 			RFIDjoueur[nbRobots] = RFID;
 			IPjoueur[nbRobots] = IP;
 			printf(" RFIDjoueur : %s IPjoueur :%s \n",RFIDjoueur[nbRobots],IPjoueur[nbRobots]);
@@ -241,43 +240,6 @@ validationballon_1(char *host, char *cleballon)
 
 
 
-/*function qui génère un ballon à distribuer*/
-ball GenerateBall(char *IPjoueur){
-
-  ball Ballon;
-  strcpy(Ballon.IPjoueur,IPjoueur);
-  /*Initialisation pour la date en seconde*/
-  time_t temps;
-  time(&temps);
-
- 	Ballon.chrono = temps;
-
-  Ballon.ID = code;
-  return Ballon;
-}
-
-/*Sérialisation d'un ballon*/
-
-char* Serialize(ball Ballon){
-
-  char str1[1024];
-  sprintf(str1,"%d",Ballon.ID);
-  fflush(stdout);
-  strcat(str1,"*");
-  strcat(str1,Ballon.IPjoueur);
-  strcat(str1,"*");
-  char str3[128];
-  sprintf(str3,"%d",Ballon.chrono);
-  strcat(str1,str3);
-  return str1;
-
-}
-
-
-
-
-
-
 
 
 
@@ -290,8 +252,7 @@ int main(){
 	///parsage
 	ParseBeeBotte(datagame);
 
-	//initialisations sockets
-
+	//initialisation de la socket
 
 	int sock;
     struct sockaddr_in server;
@@ -303,8 +264,9 @@ int main(){
 	 	// provisoirement : récupérer l'adresse RFID du robot à la main
 
 	 	printf("Rentrez le RFID du robot qui veut recevoir le ballon :\n");
+	 	char demande[24];
+	 	fgets(demande, sizeof(demande), stdin);
 
-	 	scanf("%s",&demande);
 	 	int numero=0;
 	 	while (strcmp(demande, RFIDjoueur[numero])!=0){
 	 		numero++;
@@ -325,26 +287,7 @@ int main(){
 	    server.sin_family = AF_INET;
 	    server.sin_port = htons( 10001 );
 
-
-=======
-    //Create socket
-    sock = socket(AF_INET , SOCK_STREAM , 0);
-    if (sock == -1)
-    {
-        printf("Could not create socket");
-    }
-    puts("Socket created");
-     
-    server.sin_addr.s_addr = inet_addr("127.0.0.1");
-    server.sin_family = AF_INET;
-    server.sin_port = htons( 8888 );
-
-	//boucle infinie
-	 for(;;){
 	 	
-
-	 	//if passage RFID commment le matérialiser ?
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 	    //Connexion au serveur robot
 	    if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0)
 	    {
@@ -355,13 +298,10 @@ int main(){
 	    puts("Connected\n");
 
 	  	/* Reception de donnees du serveur ( Réponse à la question : Avez vous un ballon ?)*/
-<<<<<<< HEAD
+
 	  	char buffer[256];
 	  	recv(sock, buffer, 256, 0);
-=======
-	  	char buffer[1024];
-	  	recv(sock, buffer, 1024, 0);
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
+
 	  	printf("Recu : %s\n", buffer);
 
 	  	/* Initialisation du test ballon */
@@ -370,7 +310,6 @@ int main(){
 
 	  	/* Test ballon valide*/
 
-<<<<<<< HEAD
 	  	char buffer2[256] = "pas de ballon";
 
 	  	int res = strcmp(buffer, buffer2);
@@ -382,36 +321,7 @@ int main(){
 	    int cleballon = distributionballon_1("localhost",IProbot);
 	    send(sock, cleballon, 32, 0); // envoie le ballon créé au robot
 
-=======
-	  	char buffer2[1024] = "pas de ballon";
 
-	  	int res = strcmp(buffer, buffer2);
-
-	  	if(res != 0){
-	    	/*Decrypt(buffer, ballonRecu);*/
-	    	const char s[2] = "*";
-
-	    	char *token;
-	    	token = strtok(ballonRecu,s); // récupération de L'ID
-	    	int i = 0;
-	    	while(i<=code && BallonValide == 0){
-	      		char var = (char)i;
-	      		if(strcmp(token,var)!=0){
-	        		i++;
-	      		}
-	      		else{
-		        	token = strtok(NULL,s); // récupération de l'IP
-		        	token = strtok(NULL,s); // récupération de l'heure en seconde
-		        	time_t tempsVerif;
-		        	time(&tempsVerif);
-		        	int tempsRecup = atoi(token);
-	        		if( tempsVerif < tempsRecup+180){
-	          			BallonValide = 1; 
-	        		}
-	      		}
-	        }  
-	    }
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 	}
 
 	return 0;

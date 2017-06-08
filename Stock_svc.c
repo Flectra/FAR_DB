@@ -17,17 +17,10 @@
 #endif
 
 static void
-<<<<<<< HEAD
 distributionballon_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
 		data1 distribution_1_arg;
-=======
-validation_1(struct svc_req *rqstp, register SVCXPRT *transp)
-{
-	union {
-		data1 validation_1_arg;
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -38,17 +31,10 @@ validation_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		(void) svc_sendreply (transp, (xdrproc_t) xdr_void, (char *)NULL);
 		return;
 
-<<<<<<< HEAD
 	case distribution:
 		_xdr_argument = (xdrproc_t) xdr_data1;
 		_xdr_result = (xdrproc_t) xdr_reponse1;
 		local = (char *(*)(char *, struct svc_req *)) distribution_1_svc;
-=======
-	case Validation:
-		_xdr_argument = (xdrproc_t) xdr_data1;
-		_xdr_result = (xdrproc_t) xdr_reponse1;
-		local = (char *(*)(char *, struct svc_req *)) validation_1_svc;
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 		break;
 
 	default:
@@ -72,17 +58,10 @@ validation_1(struct svc_req *rqstp, register SVCXPRT *transp)
 }
 
 static void
-<<<<<<< HEAD
 validationballon_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
 		data2 validation_1_arg;
-=======
-distribution_2(struct svc_req *rqstp, register SVCXPRT *transp)
-{
-	union {
-		data2 distribution_2_arg;
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -93,17 +72,10 @@ distribution_2(struct svc_req *rqstp, register SVCXPRT *transp)
 		(void) svc_sendreply (transp, (xdrproc_t) xdr_void, (char *)NULL);
 		return;
 
-<<<<<<< HEAD
 	case validation:
 		_xdr_argument = (xdrproc_t) xdr_data2;
 		_xdr_result = (xdrproc_t) xdr_reponse2;
 		local = (char *(*)(char *, struct svc_req *)) validation_1_svc;
-=======
-	case distribution:
-		_xdr_argument = (xdrproc_t) xdr_data2;
-		_xdr_result = (xdrproc_t) xdr_reponse2;
-		local = (char *(*)(char *, struct svc_req *)) distribution_2_svc;
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 		break;
 
 	default:
@@ -131,34 +103,20 @@ main (int argc, char **argv)
 {
 	register SVCXPRT *transp;
 
-<<<<<<< HEAD
 	pmap_unset (distributionballon, VERSION_UN);
 	pmap_unset (validationballon, VERSION_UN);
-=======
-	pmap_unset (Validation, VERSION_UN);
-	pmap_unset (distribution, VERSION_UN);
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 
 	transp = svcudp_create(RPC_ANYSOCK);
 	if (transp == NULL) {
 		fprintf (stderr, "%s", "cannot create udp service.");
 		exit(1);
 	}
-<<<<<<< HEAD
 	if (!svc_register(transp, distributionballon, VERSION_UN, distributionballon_1, IPPROTO_UDP)) {
 		fprintf (stderr, "%s", "unable to register (distributionballon, VERSION_UN, udp).");
 		exit(1);
 	}
 	if (!svc_register(transp, validationballon, VERSION_UN, validationballon_1, IPPROTO_UDP)) {
 		fprintf (stderr, "%s", "unable to register (validationballon, VERSION_UN, udp).");
-=======
-	if (!svc_register(transp, Validation, VERSION_UN, validation_1, IPPROTO_UDP)) {
-		fprintf (stderr, "%s", "unable to register (Validation, VERSION_UN, udp).");
-		exit(1);
-	}
-	if (!svc_register(transp, distribution, VERSION_UN, distribution_2, IPPROTO_UDP)) {
-		fprintf (stderr, "%s", "unable to register (distribution, VERSION_UN, udp).");
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 		exit(1);
 	}
 
@@ -167,21 +125,12 @@ main (int argc, char **argv)
 		fprintf (stderr, "%s", "cannot create tcp service.");
 		exit(1);
 	}
-<<<<<<< HEAD
 	if (!svc_register(transp, distributionballon, VERSION_UN, distributionballon_1, IPPROTO_TCP)) {
 		fprintf (stderr, "%s", "unable to register (distributionballon, VERSION_UN, tcp).");
 		exit(1);
 	}
 	if (!svc_register(transp, validationballon, VERSION_UN, validationballon_1, IPPROTO_TCP)) {
 		fprintf (stderr, "%s", "unable to register (validationballon, VERSION_UN, tcp).");
-=======
-	if (!svc_register(transp, Validation, VERSION_UN, validation_1, IPPROTO_TCP)) {
-		fprintf (stderr, "%s", "unable to register (Validation, VERSION_UN, tcp).");
-		exit(1);
-	}
-	if (!svc_register(transp, distribution, VERSION_UN, distribution_2, IPPROTO_TCP)) {
-		fprintf (stderr, "%s", "unable to register (distribution, VERSION_UN, tcp).");
->>>>>>> 06165ad47ec004befbee37b1cdafff274e9f7f76
 		exit(1);
 	}
 
