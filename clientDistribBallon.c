@@ -10,7 +10,6 @@
 #define PORT 10001
 #include "Stock.h"
 
-#define PORT 10001
 
 
 
@@ -69,7 +68,6 @@ void ParseBeeBotte(char* buffer){
 		char *RFID = strtok(NULL,","); // récupération RFID
 		strtok(NULL,"=");
 		char *IP = strtok(NULL,"\""); // récupération dernière donnee (IP)
-		printf("\n %s, %s,%s \n\n",entite,RFID,IP);
 
 		char typetest[24]="";
 		strcpy(typetest,type);
@@ -224,7 +222,7 @@ validationballon_1(char *host, char *cleballon)
 		exit (1);
 	}
 #endif	/* DEBUG */
-	strcpy(validation_1_arg.cleballon, cleballon);
+	strcpy(validation_1_arg.cleballon, cleBallon);
 	result_1 = validation_1(&validation_1_arg, clnt);
 	if (result_1 == (reponse2 *) NULL) {
 		clnt_perror (clnt, "call failed");
@@ -245,9 +243,26 @@ validationballon_1(char *host, char *cleballon)
 
 
 int main(){
+	//envoi de notre position 
+
+	char *infoApublier[4]; //  infos a publier
+    infoApublier[0] = "type_msg=COORD";
+    infoApublier[1] = "type_ent=DB";
+
+    infoApublier[2] = "num=IP"; // trouver l'IP
+    infoApublier[3] = "data= à compléter";// mettre ici la position du distributeur
+    char *channel = "testDB";// à changer en le channel de la partie
+    char *ressource = "msg"; 
+    // canal partie0 : 1494793564147_KNl54g97mG89kQSZ
+    // canal testDB : 1496917887663_YQDiTFXWeDBbzU5G
+    char *channelKey = "1496917887663_YQDiTFXWeDBbzU5G"; // trouver le channel de la partie
+
+    /* Envoie a BeeBotte en methode POST */
+    sendToBeBotte(channel,channelKey,ressource,infoApublier);
 
 	// réception des données
 	char* datagame = getBeeBotte();
+
 
 	///parsage
 	ParseBeeBotte(datagame);
